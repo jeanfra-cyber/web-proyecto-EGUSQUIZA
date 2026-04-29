@@ -1,3 +1,4 @@
+/* --- VARIABLES Y CONFIGURACIÓN GLOBAL --- */
 :root {
     --amarillo-neon: #FFD700;
     --negro-deep: #0a0a0a; 
@@ -29,7 +30,7 @@ body {
     width: 95%;
 }
 
-
+/* --- HEADER Y NAVEGACIÓN --- */
 .header__titulo {
     text-align: center;
     font-size: 4rem;
@@ -40,7 +41,6 @@ body {
 }
 
 .header__titulo span { color: var(--amarillo-neon); font-weight: 900; }
-
 
 .barra-navegacion {
     background-color: var(--amarillo-neon);
@@ -67,28 +67,22 @@ body {
 
 .enlaces a:hover { background-color: var(--negro-deep); color: var(--amarillo-neon); }
 
-
+/* --- BANNER PRINCIPAL --- */
 .banner-principal {
-    background-image: 
-        linear-gradient(to bottom, rgba(10, 10, 10, 0.7), rgba(10, 10, 10, 0.85)), 
-        url('../img/hero-bart.png'); 
-    background-size: cover; /* Llenar todo el espacio */
-    background-position: center 25%; /* Centrar en el teléfono */
-    background-repeat: no-repeat;
+    background-image: linear-gradient(to bottom, rgba(10, 10, 10, 0.7), rgba(10, 10, 10, 0.85)), url('../img/hero-bart.png'); 
+    background-size: cover;
+    background-position: center 25%;
     background-attachment: fixed;
-    height: 550px; /* Un poco más alto para mejor vista */
+    height: 550px;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     border-bottom: 1px solid var(--gris-borde);
 }
 
 .banner__opacidad {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.5); /* Sombra para resaltar texto */
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
     padding: 3rem;
     border-radius: 10px;
     backdrop-filter: blur(4px);
@@ -98,154 +92,227 @@ body {
     font-size: 4.5rem;
     color: var(--amarillo-neon);
     text-transform: uppercase;
-    text-shadow: 0 0 15px rgba(255, 215, 0, 0.7), 0 0 2px black;
 }
 
-.ubicacion-actual {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    font-family: 'Courier New', monospace;
-    color: var(--amarillo-neon);
-}
-
-.ubicacion-actual svg { 
-    width: 2.5rem; 
-    height: 2.5rem; 
-    animation: pulse 2s infinite; 
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.1); opacity: 0.7; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
-.btn-accion {
-    background-color: var(--amarillo-neon);
-    color: var(--negro-deep);
-    padding: 1.5rem 4rem;
-    font-weight: 900;
-    text-decoration: none;
-    border: 1px solid var(--amarillo-neon);
-    transition: all 0.3s ease;
-}
-
-.btn-accion:hover {
-    background-color: transparent;
-    color: var(--amarillo-neon);
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
-}
-
-
+/* --- SECCIONES Y CARDS --- */
 .seccion-blanca {
     background-color: var(--negro-card);
     padding: 6rem 2rem;
-    margin-top: -5rem;
     border: 1px solid var(--gris-borde);
 }
 
-.seccion-blanca h2 { color: white; text-align: center; margin-bottom: 5rem; }
-
-@media (min-width: 768px) {
-    .servicios-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; }
+.servicios-grid, .proyectos-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
 }
 
-.card-servicio {
+@media (min-width: 768px) {
+    .servicios-grid, .proyectos-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.card-servicio, .card-proyecto {
     background-color: var(--negro-deep);
     padding: 3rem;
     border: 1px solid var(--gris-borde);
     text-align: center;
+    transition: transform 0.3s;
 }
 
-.card-servicio h3 { color: var(--amarillo-neon); margin-top: 2rem; }
+.card-proyecto:hover { transform: translateY(-10px); border-color: var(--amarillo-neon); }
 
-.circulo-icono {
+/* --- BOTÓN IR ARRIBA (EL QUE NECESITABAS) --- */
+.btn-ir-arriba {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9999;
     background-color: var(--amarillo-neon);
-    width: 75px;
-    height: 75px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform: rotate(45deg);
+    color: #000;
+    border: 2px solid #000;
+    padding: 1.5rem 2rem;
+    border-radius: 50px;
+    font-weight: 900;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    
+    /* Inicialmente oculto */
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
 }
 
-.circulo-icono svg { transform: rotate(-45deg); width: 3.5rem; height: 3.5rem; }
-
-
-.form-estilo {
-    background-color: var(--negro-deep);
-    padding: 4rem;
-    border: 1px solid var(--gris-borde);
-    max-width: 750px;
-    margin: 5rem auto;
+/* Clase que activa el JS */
+.btn-ir-arriba.mostrar {
+    opacity: 1;
+    visibility: visible;
 }
 
-.form-estilo legend { color: var(--amarillo-neon); font-weight: bold; text-transform: uppercase; }
+.btn-ir-arriba:hover {
+    background-color: #000;
+    color: var(--amarillo-neon);
+    transform: translateY(-5px);
+}
 
-.input-form {
-    width: 100%;
-    padding: 1.5rem;
-    background-color: #1a1a1a;
-    border: 1px solid var(--gris-borde);
+.pie-pagina { text-align: center; padding: 4rem; color: #444; font-family: monospace; }
+
+/* --- BOTÓN IR ARRIBA (CORREGIDO) --- */
+.btn-ir-arriba {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9999;
+    background-color: #FFD700; /* Amarillo Neón */
+    color: #000;
+    border: none;
+    padding: 1.5rem 2rem;
+    border-radius: 50px;
+    font-weight: 900;
+    cursor: pointer;
+    font-size: 1.4rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    
+    /* Estado inicial: Invisible */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.4s ease;
+}
+
+/* Esta clase es la que activa el JavaScript */
+.btn-ir-arriba.mostrar {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.btn-ir-arriba:hover {
+    background-color: #ffffff;
+    transform: scale(1.1);
+}
+/* EFECTO MÁQUINA DE ESCRIBIR */
+#maquina {
+    color: #FFD700;
+    border-right: 3px solid #FFD700;
+    padding-right: 5px;
+    animation: parpadeo 0.7s infinite;
+}
+@keyframes parpadeo {
+    0%, 100% { border-color: transparent; }
+    50% { border-color: #FFD700; }
+}
+
+/* BOTÓN IR ARRIBA */
+.btn-ir-arriba {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #FFD700;
+    color: #000;
+    border: none;
+    padding: 1.5rem 2rem;
+    border-radius: 50px;
+    font-weight: 900;
+    cursor: pointer;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+.btn-ir-arriba.mostrar {
+    opacity: 1;
+    visibility: visible;
+}
+
+.btn-ir-arriba:hover {
+    background-color: #ffffff;
+    transform: scale(1.1);
+}
+
+/* EFECTO HOVER EN LAS TARJETAS */
+.card-servicio:hover {
+    border-color: #FFD700;
+    transform: translateY(-10px);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+/* --- ANIMACIÓN MÁQUINA DE ESCRIBIR --- */
+#maquina {
+    color: #FFD700;
+    border-right: 3px solid #FFD700;
+    padding-right: 5px;
+    animation: parpadeoCursor 0.8s infinite;
+}
+@keyframes parpadeoCursor {
+    0%, 100% { border-color: transparent; }
+    50% { border-color: #FFD700; }
+}
+
+/* --- BOTÓN IR ARRIBA (CORREGIDO) --- */
+.btn-ir-arriba {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9999;
+    background-color: #FFD700;
+    color: #000;
+    border: none;
+    padding: 1.2rem 1.8rem;
+    border-radius: 50px;
+    font-weight: 900;
+    cursor: pointer;
+    font-size: 1.1rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+    
+    /* Estado inicial oculto */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.4s ease;
+}
+
+/* Clase que activa el JavaScript */
+.btn-ir-arriba.mostrar {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.btn-ir-arriba:hover {
+    background-color: #ffffff;
+    transform: scale(1.1);
+}
+
+/* Botón Ir Arriba */
+.btn-ir-arriba {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    margin-top: 1rem;
-}
-
-.pie-pagina {
-    text-align: center;
-    padding: 4rem;
-    color: #444;
-    font-family: 'Courier New', monospace;
-}
-
-/* Cuadrícula de Proyectos */
-.proyectos-grid {
-    display: grid;
-    grid-template-columns: 1fr; /* 1 columna en móvil */
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-@media (min-width: 768px) {
-    .proyectos-grid {
-        grid-template-columns: repeat(3, 1fr); /* 3 columnas en PC */
-    }
-}
-
-.card-proyecto {
-    background-color: #f8f9fa;
-    padding: 2rem;
-    border-radius: 1rem;
-    text-align: center;
-    border-bottom: 5px solid #FFD700; /* Detalle estético dorado */
-    transition: transform 0.3s ease;
-}
-
-.card-proyecto:hover {
-    transform: translateY(-10px); /* Efecto de levitación */
-}
-
-.perfil-circular {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.foto-circular {
-    width: 150px;
-    height: 150px;
+    border: none;
     border-radius: 50%;
-    border: 5px solid #FFD700;
-    object-fit: cover;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    justify-content: center;
+    align-items: center;
 }
 
-.datos-personales {
-    background: #222;
-    color: white;
-    padding: 1.5rem;
-    border-radius: 10px;
-    margin: 2rem 0;
-    font-family: 'Courier New', Courier, monospace; /* Toque técnico */
+.btn-ir-arriba:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.btn-ir-arriba:active {
+    transform: translateY(0);
 }

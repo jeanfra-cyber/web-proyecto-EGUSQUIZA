@@ -6,7 +6,40 @@
     <title>Dev Portafolio | Jean Franco</title>
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Krub:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos del botón Ir Arriba */
+        .btn-ir-arriba {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            justify-content: center;
+            align-items: center;
+            display: none;
+        }
+
+        .btn-ir-arriba:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+
+        .btn-ir-arriba:active {
+            transform: translateY(0);
+        }
+    </style>
 </head>
+ <script src="js/script.js"> </script>
 <body>
     <header>
         <h1 class="header__titulo">JEAN FRANCO <span>EGUSQUIZA</span></h1>
@@ -23,15 +56,23 @@
 
     <section class="banner-principal">
         <div class="banner__opacidad">
-            <h2>Full Stack <span>Desarrollador</span></h2>
+            <h2 style="font-size: 3.5rem;">Soy <span id="maquina"></span></h2>
+            
             <div class="ubicacion-actual">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                 <p>Yanacancha, PASCO // 2026</p>
             </div>
-            <a class="btn-accion" href="contactos.html">> EJECUTAR_CONTACTO</a>
+
+            <div style="display: flex; justify-content: center; gap: 4rem; margin-top: 3rem;">
+                <div><h3 style="margin:0; font-size: 2.5rem; color: white;">+<span class="contador">6</span></h3><p style="font-size: 1rem; color: #888;">AÑOS EXP.</p></div>
+                <div><h3 style="margin:0; font-size: 2.5rem; color: white;">+<span class="contador">50</span></h3><p style="font-size: 1rem; color: #888;">PROYECTOS</p></div>
+            </div>
+
+            <a class="btn-accion" href="contactos.html" style="margin-top: 2rem; display: inline-block;">> EJECUTAR_CONTACTO</a>
         </div> 
     </section>
-
+<button id="btnTop">Ir Arriba </button>
+     <script src="js/script.js"> </script>
     <main class="contenedor seccion-blanca">
         <h2>_SERVICIOS_ESPECIALIZADOS</h2>
         <div class="servicios-grid">
@@ -53,5 +94,73 @@
     <footer class="pie-pagina">
         <p>SYSTEM_STATUS: ONLINE // JEAN FRANCO EGUSQUIZA // 2026</p>
     </footer>
+
+    <!-- Botón Ir Arriba (único) -->
+    <button id="btnTop" class="btn-ir-arriba">▲</button>
+
+    <script>
+        // Script completo con todas las funcionalidades
+        document.addEventListener('DOMContentLoaded', function() {
+            // === MÁQUINA DE ESCRIBIR ===
+            const textoOriginal = "DESARROLLADOR WEB";
+            const spanMaquina = document.getElementById("maquina");
+            let i = 0;
+            
+            function escribirTexto() {
+                if (i < textoOriginal.length) {
+                    spanMaquina.textContent += textoOriginal.charAt(i);
+                    i++;
+                    setTimeout(escribirTexto, 100);
+                }
+            }
+            
+            if (spanMaquina) {
+                spanMaquina.textContent = "";
+                escribirTexto();
+            }
+
+            // === CONTADORES ===
+            const contadores = document.querySelectorAll('.contador');
+            
+            function animarContador(elemento) {
+                const objetivo = parseInt(elemento.textContent);
+                let actual = 0;
+                const incremento = objetivo / 50;
+                const intervalo = setInterval(() => {
+                    actual += incremento;
+                    if (actual >= objetivo) {
+                        elemento.textContent = objetivo;
+                        clearInterval(intervalo);
+                    } else {
+                        elemento.textContent = Math.floor(actual);
+                    }
+                }, 20);
+            }
+            
+            contadores.forEach(contador => animarContador(contador));
+
+            // === BOTÓN IR ARRIBA ===
+            const btnTop = document.getElementById('btnTop');
+            
+            // Ocultar/mostrar botón según scroll
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    btnTop.style.display = 'flex';
+                } else {
+                    btnTop.style.display = 'none';
+                }
+            });
+            
+            // Función para ir arriba suavemente
+            if (btnTop) {
+                btnTop.addEventListener('click', function() {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+        });
+    </script>
 </body>
 </html>
